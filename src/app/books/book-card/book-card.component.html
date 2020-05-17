@@ -1,0 +1,29 @@
+<div class="book-card">
+  <div class="book-review">
+    <app-star-review [mark]="book.stars"></app-star-review>
+  </div>
+  <img class="book-cover" src="{{ book.cover }}" alt="">
+  <button class="book-title-wrapper" [mdePopoverTriggerFor]="appPopover">
+    <span class="book-title">{{ book.name }}</span>
+  </button>
+</div>
+
+<mde-popover #appPopover="mdePopover"
+             mdePopoverPositionY="above"
+             mdePopoverPositionX="after"
+             [mdePopoverOffsetY]="80"
+             [mdePopoverOffsetX]="100">
+  <div class="book-details">
+    <div class="book-details__title">{{ book.name }}</div>
+    <div class="book-details__writers">
+      <span *ngFor="let writer of book.writers; let last = last; let index = index">
+        {{ writer.name }}{{ last ? '' : ', '}}
+      </span>
+    </div>
+    <div class="book-details__types">
+       <span *ngFor="let type of book.types; let last = last; let index = index">
+        {{ type.name }}{{ last ? '' : ', '}}
+      </span>
+    </div>
+  </div>
+</mde-popover>

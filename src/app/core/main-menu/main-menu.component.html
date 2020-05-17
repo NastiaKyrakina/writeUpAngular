@@ -1,0 +1,6 @@
+<div class="logo-container">
+  <img class="logo" src="assets/main-logo.png" alt="">
+</div>
+<nav>
+  <a *ngFor="let page of pages" class="menu__link" [routerLink]="page.link" routerLinkActive="active">{{ page.name }}</a>
+</nav>

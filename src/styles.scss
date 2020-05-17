@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'styles/reset';
+@import 'styles/base/base';
+@import 'styles/features/features';
+
+//html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+mat-sidenav-container {
+  width: 100vw;
+  height: 100vh;
+  background: url('./assets/styles/background.png') no-repeat;
+  background-size: cover;
+}
+
+mat-sidenav.mat-drawer {
+  background-color: #9F3ED5;
+  border-radius: 0 6px 6px 0
+}

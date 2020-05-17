@@ -1,0 +1,36 @@
+.logo-container {
+  padding: 10px 0 20px 0;
+}
+
+.logo {
+  width: 100%;
+}
+
+.menu {
+
+}
+
+.menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  color: #E0E0E0;
+  border-bottom: 1px solid #BDBDBD;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #e394ef;
+  }
+}
+
+.menu__link.active {
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #ce93d8;
+}

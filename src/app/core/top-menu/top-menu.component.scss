@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 45px;
+  height: 45px;
+  padding: 0 5px;
+  border-radius: 0 0 6px 6px;
+  background: #6700a0;
+  //transition: width 0.3s ease-in-out;
+
+  &:hover {
+    width: 200px;
+
+    .additional {
+      display: block;
+    }
+  }
+}
+
+.additional {
+  display: none;
+}
+
+.exit-button {
+  color: #BDBDBD;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  color: #F2F2F2;
+  margin-right: 10px;
+
+}
