@@ -10,7 +10,6 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import {MatFileUploadModule} from "angular-material-fileupload";
 import { BooksSliderComponent } from './books-slider/books-slider.component';
 import { BookCardComponent } from './book-card/book-card.component';
 import {MdePopoverModule} from "@material-extended/mde";
@@ -26,7 +25,6 @@ import {SharedModule} from "../shared/shared.module";
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatFileUploadModule,
     MdePopoverModule,
     SharedModule,
   ],
