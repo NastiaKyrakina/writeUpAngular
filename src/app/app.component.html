@@ -1,14 +1,19 @@
-<div class="main-container">
-  <mat-sidenav-container>
-    <mat-sidenav mode="side" fixedInViewport="true" opened="true">
-      <app-main-menu></app-main-menu>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  <header class="header-block">
-    <app-top-menu></app-top-menu>
-  </header>
-</div>
+<ng-container *ngIf="user; else authPage">
+  <div class="main-container">
+    <mat-sidenav-container>
+      <mat-sidenav mode="side" fixedInViewport="true" opened="true">
+        <app-main-menu></app-main-menu>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+    <header class="header-block">
+      <app-top-menu></app-top-menu>
+    </header>
+  </div>
+</ng-container>
+<ng-template #authPage>
+  <app-auth></app-auth>
+</ng-template>
 

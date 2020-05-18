@@ -1,0 +1,15 @@
+.mat-form-field-appearance-fill .mat-form-field-underline::before {
+  background-color: #E0E0E0 !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+ color: #E0E0E0 !important;
+}
+
+.mat-input-element{
+  color: #E0E0E0 !important;
+}
+
+.mat-form-field-hide-placeholder .mat-input-element::-webkit-input-placeholder {
+  color: #E0E0E0 !important;
+}

@@ -16,3 +16,54 @@ mat-sidenav.mat-drawer {
   background-color: #9F3ED5;
   border-radius: 0 6px 6px 0
 }
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: url('./assets/ba.png') no-repeat;
+  background-size: cover;
+}
+
+mat-dialog-container {
+  background-color: #b4aabd !important;
+}
+
+.secondary {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+
+  /* Gray 3 */
+
+  color: #828282;
+
+  background: #E0E0E0;
+  border-radius: 6px;
+}
+
+.primary {
+  background: #F2994A;
+  border-radius: 6px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+
+  /* Gray 6 */
+
+  color: #F2F2F2;
+}
+
+
+.form-element-block {
+  display: block !important;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}

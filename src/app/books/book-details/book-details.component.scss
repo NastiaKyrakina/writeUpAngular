@@ -3,6 +3,13 @@
   padding: 20px 30px;
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.filters-block {
+  position: absolute;
+  top: 0;
+  right: 50px;
 }
 
 .books-list {

@@ -14,20 +14,25 @@ import { BooksSliderComponent } from './books-slider/books-slider.component';
 import { BookCardComponent } from './book-card/book-card.component';
 import {MdePopoverModule} from "@material-extended/mde";
 import {SharedModule} from "../shared/shared.module";
+import { FilterBlockComponent } from './filter-block/filter-block.component';
+import {MatIconModule} from "@angular/material/icon";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent],
-  imports: [
-    CommonModule,
-    BooksRoutingModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MdePopoverModule,
-    SharedModule,
-  ],
+  declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent, FilterBlockComponent],
+    imports: [
+        CommonModule,
+        BooksRoutingModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MdePopoverModule,
+        SharedModule,
+        MatIconModule,
+        FormsModule,
+    ],
   entryComponents: [
     AddBookModalComponent,
   ]
