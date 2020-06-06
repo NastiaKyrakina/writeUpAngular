@@ -11,6 +11,8 @@ import {BooksService} from "../../core/servises/books.service";
 })
 export class BookDetailsComponent implements OnInit {
   viewType = 'dashboard';
+  booksNew$: Observable<Array<IBook>>;
+  booksPop$: Observable<Array<IBook>>;
   books$: Observable<Array<IBook>>;
 
   constructor(
@@ -22,7 +24,9 @@ export class BookDetailsComponent implements OnInit {
   }
 
   loadBooks(type: string): void {
-    this.books$ = this.booksService.getBooks();
+    this.booksNew$ = this.booksService.getBooks();
+    this.booksPop$ = this.booksService.getBooks('popular');
+
   }
 
   searchBooks(query): void {
@@ -30,7 +34,7 @@ export class BookDetailsComponent implements OnInit {
       this.books$ = this.booksService.searchBooks(query);
       this.viewType = 'search-result';
     } else {
-      this.books$ = this.booksService.getBooks();
+      this.loadBooks('');
       this.viewType = 'dashboard';
     }
 

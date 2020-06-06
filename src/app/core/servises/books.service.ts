@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
-import {books} from "./consts";
+import {books, booksPopular} from "./consts";
 import {IBook} from "../../../models/interfaces/books";
 
 @Injectable({
@@ -10,20 +10,22 @@ export class BooksService {
 
   constructor() { }
 
-  getBooks(): Observable<Array<IBook>> {
-    return of(books);
+  getBooks(type: string = 'new'): Observable<Array<IBook>> {
+    if (type === 'new') {
+      return of(books);
+    } else {
+      return of(booksPopular);
+    }
   }
 
   searchBooks(query: string): Observable<Array<IBook>> {
     if (query) {
       query = query.toLowerCase();
-      const booksFiltered = books.filter(book => {
-        console.log(book.name);
-        console.log( book.name.includes(query));
+      const booksFiltered = [...books, ...booksPopular].filter(book => {
         return book.name.toLowerCase().includes(query) || book.writers[0].name.toLowerCase().includes(query)
       })
       return of(booksFiltered);
     }
-    return of(books);
+    return of([...books, ...booksPopular]);
   }
 }

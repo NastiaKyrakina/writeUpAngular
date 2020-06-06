@@ -9,7 +9,7 @@ export class FilterBlockComponent implements OnInit {
 
   @Output() searched: EventEmitter<string> = new EventEmitter<string>();
 
-  isSearchActive = true;
+  isSearchActive = false;
   isFilterActive = false;
 
   isSearchOpen = false;
