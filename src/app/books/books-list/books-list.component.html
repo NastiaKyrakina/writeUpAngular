@@ -1,1 +1,26 @@
-<p>books-list works!</p>
+<app-filter-block class="filters-block" (searched)="searchBooks($event)"></app-filter-block>
+
+<h1 class="main-title">Нові та неймовірні історії чекають на тебе!</h1>
+<ng-container *ngIf="viewType === 'dashboard'">
+  <h2 class="primary-title">Новинки</h2>
+  <app-books-slider class="books-list" [books]="booksNew$ | async"></app-books-slider>
+
+  <h2 class="primary-title">Популярне</h2>
+  <app-books-slider [books]="booksPop$ | async"></app-books-slider>
+</ng-container>
+<ng-container *ngIf="viewType === 'search-result'">
+  <ng-container *ngIf="(books$ | async) as books">
+    <ng-container *ngIf="books.length; else emptyResult">
+      <h2 class="primary-title books-list">За заданими параметрами знайдено {{ books.length }} творів</h2>
+      <div class="search-result" >
+        <app-book-card *ngFor="let book of books"
+                       class="search-result-item"
+                       [book]="book">
+        </app-book-card>
+      </div>
+    </ng-container>
+    <ng-template #emptyResult>
+      <div class="not-found-message"></div>
+    </ng-template>
+  </ng-container>
+</ng-container>

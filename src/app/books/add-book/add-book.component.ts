@@ -16,8 +16,9 @@ export class AddBookComponent implements OnInit {
 
   ngOnInit() {
     let dialogRef = this.dialog.open(AddBookModalComponent, {
-      height: '400px',
-      width: '600px',
+      disableClose: true,
+      height: '700px',
+      width: '800px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

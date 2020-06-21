@@ -1,15 +1,33 @@
-.mat-form-field-appearance-fill .mat-form-field-underline::before {
+.modal-content .mat-form-field-appearance-fill .mat-form-field-underline::before {
   background-color: #E0E0E0 !important;
 }
 
-.mat-form-field-appearance-legacy .mat-form-field-label {
+.modal-content .mat-form-field-appearance-legacy .mat-form-field-label {
  color: #E0E0E0 !important;
 }
 
-.mat-input-element{
+.modal-content .mat-input-element{
   color: #E0E0E0 !important;
 }
 
-.mat-form-field-hide-placeholder .mat-input-element::-webkit-input-placeholder {
+.modal-content .mat-form-field-hide-placeholder .mat-input-element::-webkit-input-placeholder {
   color: #E0E0E0 !important;
+}
+
+.modal-content {
+  .mat-card {
+    background-color: #b4aabd;
+  }
+
+  h1 {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 48px;
+    color: #F2F2F2;
+  }
+
+  h2 {
+    color: rgba(0, 0, 0, 0.6);
+  }
 }

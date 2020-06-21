@@ -16,25 +16,41 @@ import {MdePopoverModule} from "@material-extended/mde";
 import {SharedModule} from "../shared/shared.module";
 import { FilterBlockComponent } from './filter-block/filter-block.component';
 import {MatIconModule} from "@angular/material/icon";
-import {FormsModule} from "@angular/forms";
-
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AngularEpubViewerModule} from "angular-epub-viewer";
+import {MatTabsModule} from "@angular/material/tabs";
+import { CommentsListComponent } from './comments/comments-list/comments-list.component';
+import { CommentComponent } from './comments/comment/comment.component';
+import { AddReviewComponent } from './reviews/add-review/add-review.component';
+import {MatSliderModule} from "@angular/material/slider";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
-  declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent, FilterBlockComponent],
-    imports: [
-        CommonModule,
-        BooksRoutingModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MdePopoverModule,
-        SharedModule,
-        MatIconModule,
-        FormsModule,
-    ],
+  declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent, FilterBlockComponent, CommentsListComponent, CommentComponent, AddReviewComponent],
+  imports: [
+    CommonModule,
+    BooksRoutingModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MdePopoverModule,
+    SharedModule,
+    MatIconModule,
+    FormsModule,
+    AngularEpubViewerModule,
+    MatTabsModule,
+    ReactiveFormsModule,
+    MatSliderModule,
+    MatButtonModule,
+    MatCardModule,
+    MatRadioModule,
+  ],
   entryComponents: [
     AddBookModalComponent,
+    AddReviewComponent,
   ]
 })
 export class BooksModule { }

@@ -6,8 +6,9 @@ import {BookDetailsComponent} from "./book-details/book-details.component";
 
 
 const routes: Routes = [
-  {path: '', component: BookDetailsComponent},
-  {path: 'books/add', component: AddBookComponent},
+  {path: '', component: BooksListComponent},
+  {path: 'books/:id', component: BookDetailsComponent},
+  {path: 'add', component: AddBookComponent},
 ];
 
 @NgModule({

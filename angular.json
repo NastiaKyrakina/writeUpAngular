@@ -31,7 +31,12 @@
               "src/styles/theme/custom-theme.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/epubjs/build/epub.js",
+              "./node_modules/epubjs/build/hooks.js",
+              "./node_modules/epubjs/build/libs/localforage.min.js",
+              "./node_modules/epubjs/build/libs/zip.min.js"
+            ]
           },
           "configurations": {
             "production": {

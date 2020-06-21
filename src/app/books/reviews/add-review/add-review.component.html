@@ -1,0 +1,30 @@
+<form class="modal-content" [formGroup]="form">
+  <h1>Рецензія на книгу {{ book.name }}</h1>
+  <div>
+    <mat-card class="example-result-card">
+      <mat-card-content>
+        <h2>Оцінка *</h2>
+        <mat-slider formControlName="mark"
+                    [max]="10"
+                    [min]="1"
+                    [step]="0.1"
+                    [thumbLabel]="true">
+        </mat-slider>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div>
+    <mat-form-field class="review-block" appearance="fill" >
+      <mat-label>Огляд</mat-label>
+      <textarea formControlName="text" type="text"  placeholder="Що ви думаєте про твір?" matInput required rows="20"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="footer">
+    <button class="secondary" mat-button (click)="close()">
+      Скасувати
+    </button>
+    <button class="primary" mat-button (click)="addReview()">
+      Створити рецензію
+    </button>
+  </div>
+</form>

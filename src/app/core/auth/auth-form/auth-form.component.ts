@@ -18,8 +18,7 @@ export class AuthFormComponent implements OnInit {
     private matDialogRef: MatDialogRef<AuthFormComponent>,
     private dialog: MatDialog,
     )
-  {
-  }
+  {}
 
   ngOnInit(): void {
     this.form = this.fb.group({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
-import {books, booksPopular} from "./consts";
+import {book, books, booksPopular} from "./consts";
 import {IBook} from "../../../models/interfaces/books";
 
 @Injectable({
@@ -9,6 +9,10 @@ import {IBook} from "../../../models/interfaces/books";
 export class BooksService {
 
   constructor() { }
+
+  getBook(id: number): Observable<IBook> {
+      return of(book);
+  }
 
   getBooks(type: string = 'new'): Observable<Array<IBook>> {
     if (type === 'new') {

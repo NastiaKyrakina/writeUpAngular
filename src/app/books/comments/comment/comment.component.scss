@@ -1,0 +1,14 @@
+.comment-block {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+
+  &__text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #9B51E0;
+    margin-left: 10px;
+    max-width: 740px;
+  }
+}

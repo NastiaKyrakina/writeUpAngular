@@ -1,3 +1,84 @@
 .form-element-block {
   display: block;
 }
+
+.book-add-details {
+  display: flex;
+  &__cover {
+    flex: 1;
+    margin-right: 15px;
+  }
+
+  &__data {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.annotation {
+  width: 100%;
+}
+
+.type-label {
+  padding-right: 10px;
+}
+
+mat-radio-button {
+  padding-right: 15px;
+}
+
+.type {
+  display: flex;
+  align-items: center;
+}
+
+.age {
+  padding-top: 20px;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+
+  label {
+    margin-right: 10px;
+    width: 220px;
+
+  }
+}
+
+.age-input {
+  border-bottom: 1px solid white;
+}
+
+.janres {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.janres-label {
+  font-style: normal;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin-right: 10px;
+}
+
+.genre-item {
+  margin-right: 10px;
+  color:  #9B51E0;
+}
+
+.janres-button {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 24px;
+  color: rgba(187, 107, 217, 0.8);
+  width: 24px;
+  height: 24px;
+  background: #F2F2F2;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

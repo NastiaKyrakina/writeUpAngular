@@ -1,0 +1,6 @@
+<form class="example-form">
+  <button><mat-icon class="add-comment-icon">add_box</mat-icon></button>
+    <mat-label>Приєднатися до обговорення</mat-label>
+    <textarea matInput placeholder="Приєднатися до обговорення..."></textarea>
+</form>
+<app-comment *ngFor="let comment of comments$ | async" [comment]="comment"></app-comment>

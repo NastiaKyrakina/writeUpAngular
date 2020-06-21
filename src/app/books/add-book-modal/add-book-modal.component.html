@@ -1,9 +1,39 @@
 <form class="modal-content">
   <mat-form-field class="form-element-block" appearance="fill" >
-    <mat-label>Type book title</mat-label>
+    <mat-label>Назва</mat-label>
     <input matInput required>
   </mat-form-field>
-  
+  <div class="book-add-details">
+    <div class="book-add-details__cover">
+      <app-upload-file (uploadedFiles)="uploadFile($event)"></app-upload-file>
+    </div>
+    <div class="book-add-details__data">
+      <mat-form-field class="annotation" appearance="fill" >
+        <mat-label>Аннотація...</mat-label>
+        <textarea formControlName="text" type="text"  placeholder="Про що цей твір" matInput required rows="10"></textarea>
+      </mat-form-field>
+      <div class="type">
+        <label for="type" class="type-label">Тип твору:</label>
+        <mat-radio-group id="type">
+          <mat-radio-button value="novel">Проза</mat-radio-button>
+          <mat-radio-button value="poet">Поезія</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="age">
+        <label for="age">Вікове обмеження:</label>
+        <input class="age-input" type="number" id='age' min="0" max="100" matInput required>
+      </div>
+    </div>
+  </div>
+  <div class="janres">
+    <span class="janres-label">Жанри:</span>
+    <span *ngFor="let genre of genres; let last = last; let index = index" class="genre-item">
+              {{ genre.name }}{{ last ? '' : ', '}}
+    </span>
+    <button class="janres-button"
+            [mdePopoverTriggerFor]="appPopover"
+            mdePopoverTriggerOn="click">+</button>
+  </div>
 <!--  <mat-form-field class="form-element-block" appearance="fill">-->
 <!--    <mat-label>Select genres</mat-label>-->
 <!--    <mat-select multiple>-->
@@ -13,3 +43,11 @@
 <!--    </mat-select>-->
 <!--  </mat-form-field>-->
 </form>
+
+<mde-popover #appPopover="mdePopover"
+             mdePopoverPositionY="above"
+             mdePopoverPositionX="after"
+             [mdePopoverOffsetY]="100"
+             [mdePopoverOffsetX]="50">
+  <app-type-select (genreListChanged)="updateGenres($event)"></app-type-select>
+</mde-popover>

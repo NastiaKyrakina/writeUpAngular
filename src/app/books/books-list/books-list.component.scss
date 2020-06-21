@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  padding: 20px 30px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.filters-block {
+  position: absolute;
+  top: 0;
+  right: 50px;
+}
+
+.books-list {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.search-result {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+}
+
+.search-result-item {
+  margin-right: 20px;
+}

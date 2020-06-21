@@ -1,26 +1,111 @@
-<app-filter-block class="filters-block" (searched)="searchBooks($event)"></app-filter-block>
+<div *ngIf="book">
+  <div class="details-header">
+    <div class="details-header__left">
+      <h1 class="details-title"> {{ book.name }} </h1>
+      <button class="delete-button">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+      <button class="edit-button">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <div class="details-header__rigth">
+      <button [mdePopoverTriggerFor]="appPopover">
+        <app-star-review [mark]="book.stars"></app-star-review>
+      </button>
+      <mde-popover #appPopover="mdePopover"
+                   mdePopoverPositionY="above"
+                   mdePopoverPositionX="after"
+                   [mdePopoverOffsetY]="80"
+                   [mdePopoverOffsetX]="-30">
+        <div class="review-details">
+          <div class="review-details__review">Оцінка {{ book.stars }} з 10</div>
+          <div class="review-details__count">Кількість оцінок: {{ book.starsCount }}</div>
+        </div>
+      </mde-popover>
+    </div>
+  </div>
+  <div class="details-body">
+    <div class="details-book-cover">
+      <img class="book-cover" src="{{ book.cover }}" alt="">
+    </div>
+    <div class="details-characteristic-list">
+      <ul>
+        <li class="details-list-item">
+          <span class="list-label">Автор(и):</span>
+          <span class="list-value list-value--authors">
+            <ng-container *ngFor="let writer of book.writers; let last = last; let index = index">
+              {{ writer.name }}{{ last ? '' : ', '}}
+            </ng-container>
+          </span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Жанри:</span>
+          <span class="list-value">
+            <ng-container  *ngFor="let type of book.types; let last = last; let index = index">
+              {{ type.name }}{{ last ? '' : ', '}}
+            </ng-container>
+          </span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Тип:</span>
+          <span class="list-value">{{ TYPES_NAMES[book.type] }}</span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Дата публікації:</span>
+          <span class="list-value">{{ book.pubDate }}</span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Вікове обмеження:</span>
+          <span class="list-value">{{ book.ageLimitation }}+</span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Аннотація:</span>
+          <span class="list-value">{{ book.annotation }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <mat-tab-group mat-align-tabs="start" animationDuration="200ms">
+    <mat-tab label="Зміст">
+      <ul class="toc-list">
+        <li *ngFor="let charter of chartersList" class="charter">
+          <button (click)="goToCharter(charter.href)">{{ charter.label }}</button>
+        </li>
+      </ul>
+    </mat-tab>
+    <mat-tab label="Обговорення">
+      <app-comments-list [book]="book.id"></app-comments-list>
+    </mat-tab>
+    <mat-tab label="Рецензії">
+      <button class="primary" mat-button (click)="openAddReviewModal()">
+        Додати рецензію
+      </button>
+    </mat-tab>
+  </mat-tab-group>
 
-<h1 class="main-title">Нові та неймовірні історії чекають на тебе!</h1>
-<ng-container *ngIf="viewType === 'dashboard'">
-  <h2 class="primary-title">Новинки</h2>
-  <app-books-slider class="books-list" [books]="booksNew$ | async"></app-books-slider>
 
-  <h2 class="primary-title">Популярне</h2>
-  <app-books-slider [books]="booksPop$ | async"></app-books-slider>
-</ng-container>
-<ng-container *ngIf="viewType === 'search-result'">
-  <ng-container *ngIf="(books$ | async) as books">
-    <ng-container *ngIf="books.length; else emptyResult">
-      <h2 class="primary-title books-list">За заданими параметрами знайдено {{ books.length }} творів</h2>
-      <div class="search-result" >
-        <app-book-card *ngFor="let book of books"
-                       class="search-result-item"
-                       [book]="book">
-        </app-book-card>
-      </div>
-    </ng-container>
-    <ng-template #emptyResult>
-      <div class="not-found-message"></div>
-    </ng-template>
-  </ng-container>
-</ng-container>
+
+<!--  <input type="file" accept="application/epub+zip" (change)="openFile($event)">-->
+</div>
+<div class="book-reader" [ngClass]="{'book-hidden' : !isBookOpened}">
+  <div class="book-title"></div>
+  <angular-epub-viewer #epubViewer
+                       [padding]="'16px'"
+                       [autoPagination]="true"
+                       [autoMetadata]="true"
+                       [autoTOC]="true"
+                       (onMetadataLoaded)="onMetadataLoaded($event)"
+                       (onPaginationComputed)="onPaginationComputed($event)"
+                       (onTOCLoaded)="onTOCLoaded($event)">
+
+  </angular-epub-viewer>
+  <div class="book-navigation"></div>
+</div>
+
+<!--(onDocumentReady)="onDocumentReady()" (onChapterUnloaded)="onChapterUnloaded()"-->
+<!--(onChapterDisplayed)="onChapterDisplayed($event)" (onSearchFinished)="onSearchFinished($event)"-->
+<!--(onPaginationComputed)="onPaginationComputed($event)" (onLocationFound)="onLocationFound($event)"-->
+<!--(onMetadataLoaded)="onMetadataLoaded($event)" (onTOCLoaded)="onTOCLoaded($event)"-->
+<!--(onErrorOccurred)="onErrorOccurred($event)"-->
+

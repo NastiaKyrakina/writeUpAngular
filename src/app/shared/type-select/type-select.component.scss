@@ -1,0 +1,21 @@
+.select-block {
+  padding: 3px 5px 3px 0;
+  width: 249px;
+  height: 135px;
+  background: #9B51E0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  border-radius: 6px;
+  overflow-y: auto;
+}
+
+.select-label {
+  display: flex;
+  align-items: center;
+  padding: 5px 5px 5px 5px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #F2F2F2;
+}

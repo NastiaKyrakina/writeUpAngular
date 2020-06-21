@@ -1,1 +1,33 @@
-<p>upload-file works!</p>
+<div class="drop-down__file-field" *ngIf="!imageLink; else preview" >
+  <label class="drop-down__file-content" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+    <input data-testid="file-input"
+           type="file"
+           class="drop-down__input"
+           (change)="upload($event)">
+    <span *ngIf="!isDragOver; else textForDragOver">
+      Переместить сюди фото обкладинки або
+      <span class="drop-down__link">Завантажте з пристрою</span>
+    </span>
+    <ng-template #textForDragOver>
+      <span>Перемістить сюда</span>
+    </ng-template>
+  </label>
+</div>
+<ng-template #preview>
+  <div class="image-preview-block">
+    <div class="preview-actions">
+      <button class="action-button" (click)="delete()">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+        <label class="action-button" >
+          <input data-testid="file-input"
+                 type="file"
+                 class="drop-down__input"
+                 (change)="upload($event)">
+            <mat-icon>cloud_download</mat-icon>
+        </label>
+    </div>
+    <img class="image-preview" [src]="imageLink" />
+  </div>
+</ng-template>
+

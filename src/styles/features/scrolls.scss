@@ -22,3 +22,24 @@
     background: rgb(197, 100, 252);
   }
 }
+
+.drop-down-scroll {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 11px;
+    border-radius: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 6px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(197, 100, 252, 0.5);
+    border: 1px solid #F2F2F2;
+    border-radius: 6px;
+  }
+}

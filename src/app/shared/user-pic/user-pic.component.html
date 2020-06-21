@@ -1,0 +1,10 @@
+<div *ngIf="picture; else alter" [matTooltip]="firstName+' '+lastName">
+  <img class="pic" [src]="picture">
+</div>
+<ng-template #alter>
+  <div class="pic initials" appTextToColor [matTooltip]="firstName+' '+lastName"
+       [text]="firstName+lastName"
+       [colorMap] = "['#856812', '#08b775', '#9642c8', '#dd0017']">
+    {{[firstName, lastName] | initials}}
+  </div>
+</ng-template>

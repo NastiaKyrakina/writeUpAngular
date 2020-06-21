@@ -1,4 +1,4 @@
-<div class="book-card">
+<a class="book-card" routerLink="books/1">
   <div class="book-review">
     <app-star-review [mark]="book.stars"></app-star-review>
   </div>
@@ -6,7 +6,7 @@
   <button class="book-title-wrapper" [mdePopoverTriggerFor]="appPopover">
     <span class="book-title">{{ book.name }}</span>
   </button>
-</div>
+</a>
 
 <mde-popover #appPopover="mdePopover"
              mdePopoverPositionY="above"
