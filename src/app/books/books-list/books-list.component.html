@@ -1,4 +1,8 @@
-<app-filter-block class="filters-block" (searched)="searchBooks($event)"></app-filter-block>
+<app-filter-block class="filters-block"
+                  (searched)="searchBooksByQuery($event)"
+                  (genresSelected)="searchBooksByGenre($event)"
+                  (yearsSelected)="searchBooksByYears($event)">
+</app-filter-block>
 
 <h1 class="main-title">Нові та неймовірні історії чекають на тебе!</h1>
 <ng-container *ngIf="viewType === 'dashboard'">

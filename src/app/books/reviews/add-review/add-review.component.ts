@@ -35,7 +35,10 @@ export class AddReviewComponent implements OnInit {
   }
 
   addReview(): void {
-
+    this.matDialogRef.close({
+      rate: this.form.value.mark,
+      text: this.form.value.text,
+    });
   }
 
   close() {

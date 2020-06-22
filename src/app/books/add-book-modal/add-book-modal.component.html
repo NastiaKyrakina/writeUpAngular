@@ -1,7 +1,7 @@
-<form class="modal-content">
+<form class="modal-content" [formGroup]="form">
   <mat-form-field class="form-element-block" appearance="fill" >
     <mat-label>Назва</mat-label>
-    <input matInput required>
+    <input formControlName="name" matInput required>
   </mat-form-field>
   <div class="book-add-details">
     <div class="book-add-details__cover">
@@ -10,18 +10,18 @@
     <div class="book-add-details__data">
       <mat-form-field class="annotation" appearance="fill" >
         <mat-label>Аннотація...</mat-label>
-        <textarea formControlName="text" type="text"  placeholder="Про що цей твір" matInput required rows="10"></textarea>
+        <textarea formControlName="annotation" type="text"  placeholder="Про що цей твір" matInput required rows="10"></textarea>
       </mat-form-field>
       <div class="type">
         <label for="type" class="type-label">Тип твору:</label>
-        <mat-radio-group id="type">
-          <mat-radio-button value="novel">Проза</mat-radio-button>
-          <mat-radio-button value="poet">Поезія</mat-radio-button>
+        <mat-radio-group formControlName="type"  id="type">
+          <mat-radio-button value="1">Проза</mat-radio-button>
+          <mat-radio-button value="2">Поезія</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="age">
         <label for="age">Вікове обмеження:</label>
-        <input class="age-input" type="number" id='age' min="0" max="100" matInput required>
+        <input formControlName="ageLimitation"  class="age-input" type="number" id='age' min="0" max="100" matInput required>
       </div>
     </div>
   </div>
@@ -34,14 +34,16 @@
             [mdePopoverTriggerFor]="appPopover"
             mdePopoverTriggerOn="click">+</button>
   </div>
-<!--  <mat-form-field class="form-element-block" appearance="fill">-->
-<!--    <mat-label>Select genres</mat-label>-->
-<!--    <mat-select multiple>-->
-<!--      <mat-option value="option">Option 1</mat-option>-->
-<!--      <mat-option value="option">Option 2</mat-option>-->
-<!--      <mat-option value="option">Option 3</mat-option>-->
-<!--    </mat-select>-->
-<!--  </mat-form-field>-->
+  <div class="footer">
+    <button class="secondary" mat-button (click)="closeModal()">
+      Скасувати
+    </button>
+    <button class="primary"
+            [disabled]="form.untouched || form.invalid || !genres.length"
+            mat-button (click)="addBook()">
+      Додати твір
+    </button>
+  </div>
 </form>
 
 <mde-popover #appPopover="mdePopover"

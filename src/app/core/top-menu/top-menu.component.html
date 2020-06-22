@@ -1,9 +1,11 @@
 <button class="exit-button additional" mat-button mat-icon-button (click)="logout()">
   <mat-icon local="true" aria-hidden="false" aria-label="Example thumbs up SVG icon">exit_to_app</mat-icon>
 </button>
+<ng-container *ngIf="user$ | async as user">
 <div class="user-info">
   <span class="user-name additional">
-    Вікторія Квітка
+    {{ user.firstName + ' ' + user.lastName }}
   </span>
-  <app-user-pic picture="/assets/user-logo.jpg" lastName="Вікторія" firstName="Квітка"></app-user-pic>
+  <app-user-pic [picture]="user.avatar" [lastName]="user.firstName" [firstName]="user.lastName"></app-user-pic>
 </div>
+</ng-container>

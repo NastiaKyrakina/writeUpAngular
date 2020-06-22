@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {IUser} from "../../../models/interfaces/books";
+import {IUser, IWriter} from "../../../models/interfaces/books";
+import {GENRES} from "../../shared/type-select/consts";
+import {users} from "./user-consts";
 
-export const currentUser = {
+export const currentUser = users[0];
+export const currentWriter: IWriter = {
   id: 1,
-  firstName: 'Вікторія',
-  lastName: 'Квітка',
-  password: 'test',
-  email: 'kvitka@gmail.com'
+  userId: 1,
+  user: currentUser,
+  about: 'Вітаю тебе, таємний незнайомець! Я, Анна Квітка, молодий автор з Закарпаття. Я мрію писати історії, які знайдуть відклик у серцях людей. На сторінках моїх книг ти знайдешь таємничих драконів та хоробрих лицарів, магію, кохання та частинку мого рідного краю, очарування якого я, сподіваюся, змогла перенести до нових світів. ',
+  slogan: 'Нехай народжуються історії!',
 }
 
-@Injectable({
+  @Injectable({
   providedIn: 'root'
 })
 export class UserService {

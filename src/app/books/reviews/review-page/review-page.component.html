@@ -1,0 +1,18 @@
+<div class="modal-content">
+  <h1>Рецензія на книгу {{ book.name }}</h1>
+  <div class="review-text" [innerHtml]="review.text"></div>
+  <div class="mark">
+    <div>
+      Оцінка твору:
+    </div>
+    <div>
+      <app-star-review [mark]="review.rate"></app-star-review>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button class="secondary" mat-button (click)="close()">
+      Закрити
+    </button>
+  </div>
+</div>

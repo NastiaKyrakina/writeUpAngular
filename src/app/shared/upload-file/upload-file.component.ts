@@ -6,7 +6,7 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angula
   styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent {
-
+  @Input() imageLink: any;
   @Input() set types(types: string | string[]) {
     if (Array.isArray(types)) {
       this.typesList = types;
@@ -21,7 +21,6 @@ export class UploadFileComponent {
   isDragOver = false;
   typesString: string;
   typesList: string[];
-  imageLink: any;
   imagePath: any;
 
   constructor(private cdr: ChangeDetectorRef) {

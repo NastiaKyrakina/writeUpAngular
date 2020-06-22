@@ -11,7 +11,8 @@ export class FilterButtonComponent {
 
   @Output() reset: EventEmitter<void> = new EventEmitter<void>();
 
-  resetFilters(): void {
+  resetFilters($event: Event): void {
+    $event.stopPropagation();
     this.reset.emit();
   }
 }

@@ -13,7 +13,7 @@ export class StarReviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.countStar = Array(Math.round(this.mark / 2));
+    this.countStar = Array(Math.round(this.mark / 2)) || [];
   }
 
 }

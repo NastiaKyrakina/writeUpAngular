@@ -26,9 +26,13 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import {MatRadioModule} from "@angular/material/radio";
+import { UploadBookComponent } from './reviews/add-book-modal/upload-book/upload-book.component';
+import { PopularBooksComponent } from './popular-books/popular-books.component';
+import { ReviewsListComponent } from './reviews/reviews-list/reviews-list.component';
+import { ReviewPageComponent } from './reviews/review-page/review-page.component';
 
 @NgModule({
-  declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent, FilterBlockComponent, CommentsListComponent, CommentComponent, AddReviewComponent],
+  declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent, FilterBlockComponent, CommentsListComponent, CommentComponent, AddReviewComponent, UploadBookComponent, PopularBooksComponent, ReviewsListComponent, ReviewPageComponent],
   imports: [
     CommonModule,
     BooksRoutingModule,
@@ -47,6 +51,9 @@ import {MatRadioModule} from "@angular/material/radio";
     MatButtonModule,
     MatCardModule,
     MatRadioModule,
+  ],
+  exports: [
+    BooksSliderComponent
   ],
   entryComponents: [
     AddBookModalComponent,

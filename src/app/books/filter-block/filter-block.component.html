@@ -13,8 +13,45 @@
                      class="search-button"
                      iconName="search"
                      [isActive]="isSearchActive"
+                     (reset)="resetSearch()"
                      (click)="toggleSearch()">
   </app-filter-button>
-  <app-filter-button iconName="filter_list" [isActive]="isFilterActive">
+  <app-filter-button [mdePopoverTriggerFor]="appPopover"
+                     mdePopoverTriggerOn="click"
+                     iconName="filter_list"
+                     [isActive]="isFilterActive"
+                     (reset)="resetFilters()">
   </app-filter-button>
 </div>
+<mde-popover #appPopover="mdePopover"
+             mdePopoverPositionY="above"
+             mdePopoverPositionX="after"
+             [mdePopoverOffsetY]="100"
+             [mdePopoverOffsetX]="50">
+  <div class="filters-selects-block" (click)="$event.stopPropagation()">
+    <div class="filter-selects-label">
+      Фільтрувати твори за
+    </div>
+    <div class="filter-selects-genres">
+      <mat-select class="select" (selectionChange)="selectGenre($event)" multiple placeholder="Жанром">
+        <mat-option *ngFor="let genre of GENRES" [value]="genre.id">
+          {{ genre.name }}
+        </mat-option>
+      </mat-select>
+    </div>
+    <div class="date-label">Датою публікації</div>
+    <div class="filter-selects-date">
+      <mat-select class="select" (selectionChange)="minYearSelect($event.value)" value="2000">
+        <mat-option *ngFor="let year of yearsArray" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+      <div class="arange-label">до</div>
+      <mat-select class="select" (selectionChange)="maxYearSelect($event.value)" value="2020">
+        <mat-option *ngFor="let year of yearsArray" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+</mde-popover>

@@ -1,14 +1,15 @@
-import {Component, OnInit, ChangeDetectionStrategy, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {BooksService} from "../../core/servises/books.service";
 import {Observable} from "rxjs";
-import {IBook} from "../../../models/interfaces/books";
-import {switchMap} from "rxjs/operators";
-import { TYPES_NAMES } from 'src/app/core/servises/consts';
-import {AngularEpubViewerComponent, EpubChapter, EpubMetadata, EpubPage} from "angular-epub-viewer";
-import {AuthFormComponent} from "../../core/auth/auth-form/auth-form.component";
+import {IBook, IUser} from "../../../models/interfaces/books";
+import {switchMap, take} from "rxjs/operators";
+import {TYPES_NAMES} from 'src/app/core/servises/consts';
+import {AngularEpubViewerComponent, EpubChapter, EpubLocation, EpubMetadata, EpubPage} from "angular-epub-viewer";
 import {AddReviewComponent} from "../reviews/add-review/add-review.component";
 import {MatDialog} from "@angular/material/dialog";
+import {UserService} from "../../core/servises/user.service";
+import {CommentsService} from "../../core/servises/comments.service";
 
 @Component({
   selector: 'app-book-details',
@@ -20,17 +21,35 @@ export class BookDetailsComponent implements OnInit {
   readonly TYPES_NAMES = TYPES_NAMES;
 
   @ViewChild('epubViewer', {static: true}) epubViewer: AngularEpubViewerComponent;
+  @ViewChild('navigation', {static: true}) navigation: ElementRef;
 
   book: IBook = null;
   chartersList: EpubChapter[];
   isBookOpened: boolean = false;
+  currentUser$: Observable<IUser>;
+  pagesList: EpubPage[] = [];
+  offsetWidth = 0;
+  currentPage = 1;
+  charter = 0;
+  currentTheme = 'light';
+
+  fontColors = {
+    light: '#000000',
+    dark: '#F2F2F2',
+    gold: '#18160E',
+  };
+
   constructor(
     private route: ActivatedRoute,
     private booksServise: BooksService,
+    private usersService: UserService,
+    private commentService: CommentsService,
     private dialog: MatDialog,
+    private render: Renderer2,
   ) {}
 
   ngOnInit(): void {
+    this.currentUser$ = this.usersService.user;
     this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) => {
@@ -40,7 +59,7 @@ export class BookDetailsComponent implements OnInit {
       )
       .subscribe((book) => {
         this.book = book;
-      //  this.epubViewer.openLink('assets/moby-dick.epub');
+       this.epubViewer.openLink('assets/misto/misto.epub');
       })
     ;
   }
@@ -53,7 +72,16 @@ export class BookDetailsComponent implements OnInit {
   }
 
   onPaginationComputed(pages: EpubPage[]) {
+    this.pagesList = pages;
+    this.recalculatePosition();
     console.log('event:onPaginationComputed', pages);
+  }
+
+  onLocationFound(location: EpubLocation) {
+    console.log('event:onLocationFound', location);
+    this.currentPage = location.page;
+    this.charter = location.chapter ? location.chapter.spinePos : 0;
+    this.recalculatePosition();
   }
 
   onTOCLoaded(chapters: EpubChapter[]) {
@@ -66,7 +94,7 @@ export class BookDetailsComponent implements OnInit {
     this.isBookOpened = true;
   }
 
-  openAddReviewModal() {
+  openAddReviewModal(userId: number) {
     let dialogRef = this.dialog.open(AddReviewComponent, {
       width: '560px',
       data: {
@@ -75,7 +103,61 @@ export class BookDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      this.commentService.addReview({
+        text: result.text,
+        rate: result.rate,
+        bookId: this.book.id,
+        userId: userId,
+      });
       // reload review list
+      this.booksServise.getBook(this.book.id)
+        .pipe(take(1))
+        .subscribe(book => {
+          this.book = book;
+      });
     });
+  }
+
+  selectTheme(type: string): void {
+    this.epubViewer.setStyle('color', this.fontColors[type]);
+    this.currentTheme = type;
+    const iframe = this.epubViewer.root.nativeElement.getElementsByTagName('iframe')[0];
+    console.log(iframe)
+    const iframeDoc = iframe.contentWindow.document;
+    console.log(iframeDoc)
+    iframeDoc.body.classList.add('desing');
+    this.render.addClass(iframeDoc.body, 'desing');
+  }
+
+  selectFontSize(size: number): void {
+    this.epubViewer.setStyle('font-size', `${size}px`);
+  }
+
+  caclPosition($event: MouseEvent) {
+    if (this.pagesList && this.pagesList.length) {
+      const width = this.navigation.nativeElement.getBoundingClientRect().width;
+      const pagesWidth = width / this.pagesList.length;
+      const offset = Math.round($event.offsetX / pagesWidth);
+      this.epubViewer.goTo(this.pagesList[offset-1].cfi);
+    }
+  }
+
+  recalculatePosition(): void {
+    const width = this.navigation.nativeElement.getBoundingClientRect().width;
+    const pagesWidth = width / this.pagesList.length;
+    this.offsetWidth = this.currentPage * pagesWidth;
+  }
+
+  prevPage() {
+    this.epubViewer.previousPage();
+  }
+
+  nextPage() {
+    this.epubViewer.nextPage();
+  }
+
+  hideReader() {
+    this.isBookOpened = false;
   }
 }

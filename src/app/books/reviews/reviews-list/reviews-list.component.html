@@ -1,0 +1,21 @@
+<div class="review-block" *ngFor="let comment of comments$ | async" >
+  <div class="review-block-info">
+    <div class="avatar-block">
+      <button class="delete-button" *ngIf="userId == comment.userId">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+      <app-user-pic-shared [picture]="comment.user.avatar" [lastName]="comment.user.lastName" [firstName]="comment.user.firstName"></app-user-pic-shared>
+    </div>
+    <div class="text-block">
+      {{ comment.text | slice:0:200 }}...
+      <div class="review-under">
+        <button class="show-more" (click)="showMore(comment)">
+          Читати далі
+        </button>
+        <div class="stars">
+          Оцінка твору: <app-star-review [mark]="comment.rate"></app-star-review>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

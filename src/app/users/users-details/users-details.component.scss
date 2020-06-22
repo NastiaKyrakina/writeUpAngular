@@ -1,0 +1,105 @@
+.details {
+  display: block;
+  margin: 50px 30px 20px;
+  position: relative;
+  background: #E0E0E0;
+  padding: 10px 10px 20px 30px;
+}
+
+.user-books {
+  margin: 50px 30px 20px;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.details-title {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 48px;
+  color: #F2994A;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #EB5757;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #9B51E0;
+}
+
+.details-body {
+  display: flex;
+}
+.details-book-cover {
+  min-width: 200px;
+}
+
+.book-cover {
+  width: auto;
+  height: auto;
+  max-height: 200px;
+  border-radius: 6px;
+}
+
+.details-characteristic-list {
+  margin-left: 20px;
+}
+
+.details-list-item {
+  margin-bottom: 15px;
+}
+
+.list-label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #9B51E0;
+  padding-right: 10px;
+}
+
+.list-value {
+
+  font-size: 14px;
+  line-height: 21px;
+  color: #9B51E0;
+
+  &--authors {
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 21px;
+    color: #219653;
+  }
+}
+
+.toWriter {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  color: #828282;
+  padding: 5px;
+  background-color: #ffffff;
+}

@@ -1,8 +1,12 @@
+import {IGenre} from "../../app/shared/type-select/consts";
+
 export interface IBook {
   id?: number;
   name: string;
-  writers: Array<IWriter>;
-  types: Array<ITypes>;
+  writers?: Array<IUser>;
+  writersIds: number[];
+  types?: Array<ITypes>;
+  typesIds: number[];
   cover?: string;
   stars?: number;
   starsCount?: number;
@@ -14,8 +18,11 @@ export interface IBook {
 }
 
 export interface IWriter {
-  id: number;
-  name: string
+  id?: number;
+  userId: number;
+  user: IUser;
+  about: string;
+  slogan: string;
 }
 
 export interface ITypes {
@@ -29,12 +36,19 @@ export interface IUser {
   lastName: string,
   password?: string,
   email?: string,
+  phone?: string,
   avatar?:string;
+  reviewsCount?: number;
+  types?: IGenre[];
+  typesIds?: number[];
+  hasBooks?: boolean;
 }
 
 export interface IReview {
+  id?:number;
   bookId: number,
-  user: IUser,
+  userId: number,
+  user?: IUser,
   text: string,
   rate?: number,
   pubDate?: string,

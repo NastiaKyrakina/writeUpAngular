@@ -1,0 +1,60 @@
+.review-block {
+  margin: 15px 0;
+
+  .review-block-info {
+    display: flex;
+  }
+
+  .text-block {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #9B51E0;
+    margin-left: 10px;
+    width: 740px;
+  }
+}
+
+.show-more {
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 21px;
+  color: #27AE60;
+}
+
+.stars {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #9B51E0;
+  display: flex;
+  white-space: nowrap;
+}
+
+.review-under {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar-block {
+  position: relative;
+
+  .delete-button {
+    position: absolute;
+    display: none;
+    left: 0;
+    color: #EB5757;
+    height: 35px;
+    width: 35px;
+    align-items: center;
+    justify-content: center;
+    background: #808080cf;
+    border-radius: 50%;
+  }
+
+  &:hover .delete-button{
+    display: block;
+  }
+}

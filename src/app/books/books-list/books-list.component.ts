@@ -19,11 +19,16 @@ import {BooksService} from "../../core/servises/books.service";
 })
 export class BooksListComponent implements OnInit {
 
-  viewType = 'dashboard';
+  viewType = 'search-result';
   booksNew$: Observable<Array<IBook>>;
   booksPop$: Observable<Array<IBook>>;
   books$: Observable<Array<IBook>>;
   fileSelected = false;
+  query = '';
+  genres = [];
+  startYear: number = null;
+  endYear: number = null;
+
   @ViewChild('epubViewer', {static: true}) epubViewer: AngularEpubViewerComponent;
 
   constructor(
@@ -46,9 +51,34 @@ export class BooksListComponent implements OnInit {
   }
 
   loadBooks(type: string): void {
-    this.booksNew$ = this.booksService.getBooks();
-    this.booksPop$ = this.booksService.getBooks('popular');
+    this.searchBooks();
+    // this.booksNew$ = this.booksService.getBooks();
+    // this.booksPop$ = this.booksService.getBooks('popular');
+  }
 
+  searchBooks(): void {
+    this.books$ = this.booksService.searchBooks({
+      query: this.query,
+      genres: this.genres,
+      end: this.endYear,
+      start: this.startYear,
+    });
+  }
+
+  searchBooksByGenre(types: number[]): void {
+    this.genres = types;
+    this.searchBooks();
+  }
+
+  searchBooksByYears(diap: {start: number; end: number }): void {
+    this.startYear = diap.start;
+    this.endYear = diap.end;
+    this.searchBooks();
+  }
+
+  searchBooksByQuery(query: string): void {
+    this.query = query;
+    this.searchBooks();
   }
 
   onDocumentReady() {
@@ -101,17 +131,4 @@ export class BooksListComponent implements OnInit {
     console.log('event:onErrorOccurred');
     console.log(error);
   }
-
-
-  searchBooks(query): void {
-    if (!!query) {
-      this.books$ = this.booksService.searchBooks(query);
-      this.viewType = 'search-result';
-    } else {
-      this.loadBooks('');
-      this.viewType = 'dashboard';
-    }
-
-  }
-
 }

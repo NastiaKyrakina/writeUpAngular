@@ -1,0 +1,51 @@
+<div class="details" *ngIf="user">
+  <div class="details-header">
+    <div class="details-header__left">
+      <h1 class="details-title"> {{ user.firstName + ' ' + user.lastName }} </h1>
+      <button class="delete-button" *ngIf="currentUser">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+      <button class="edit-button" *ngIf="currentUser">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <div class="details-header__rigth">
+      <a class="secondary toWriter" mat-button>На сторінку автора</a>
+    </div>
+  </div>
+  <div class="details-body">
+    <div class="details-book-cover">
+      <img class="book-cover" src="{{ user.avatar }}" alt="">
+    </div>
+    <div class="details-characteristic-list">
+      <ul>
+        <li class="details-list-item">
+          <span class="list-label">Кількість рецензій:</span>
+          <span class="list-value">
+            {{ user.reviewsCount }}
+          </span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Контактний email:</span>
+          <span class="list-value">{{ user.email }}</span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Контактний телефон:</span>
+          <span class="list-value">{{ user.phone }}</span>
+        </li>
+        <li class="details-list-item">
+          <span class="list-label">Улюблені жанри:</span>
+          <span class="list-value">
+            <ng-container  *ngFor="let type of user.types; let last = last; let index = index">
+              {{ type.name }}{{ last ? '' : ', '}}
+            </ng-container>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="user-books">
+  <h2 class="primary-title">Улюблені твори</h2>
+  <app-books-slider [books]="usersBooks$ | async"></app-books-slider>
+</div>

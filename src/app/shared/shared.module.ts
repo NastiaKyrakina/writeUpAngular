@@ -11,6 +11,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { TypeSelectComponent } from './type-select/type-select.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormsModule} from "@angular/forms";
+import { UkrDatesPipe } from './pipe/ukr-dates.pipe';
 
 
 
@@ -23,6 +24,7 @@ import {FormsModule} from "@angular/forms";
     TextToColorDirective,
     InitialsPipe,
     TypeSelectComponent,
+    UkrDatesPipe,
   ],
   imports: [
     CommonModule,

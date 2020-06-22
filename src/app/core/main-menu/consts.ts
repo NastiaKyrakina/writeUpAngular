@@ -14,7 +14,7 @@ export const Pages: Page[] = [
   },
   {
     name: "Моя полиця",
-    link: "profile",
+    link: "users/profile",
   },
   {
     name: "Додати книгу",

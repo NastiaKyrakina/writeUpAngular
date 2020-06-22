@@ -19,7 +19,7 @@
                    [mdePopoverOffsetY]="80"
                    [mdePopoverOffsetX]="-30">
         <div class="review-details">
-          <div class="review-details__review">Оцінка {{ book.stars }} з 10</div>
+          <div class="review-details__review">Оцінка {{ book.stars | number:'1.0-1'}} з 10</div>
           <div class="review-details__count">Кількість оцінок: {{ book.starsCount }}</div>
         </div>
       </mde-popover>
@@ -35,7 +35,7 @@
           <span class="list-label">Автор(и):</span>
           <span class="list-value list-value--authors">
             <ng-container *ngFor="let writer of book.writers; let last = last; let index = index">
-              {{ writer.name }}{{ last ? '' : ', '}}
+              {{ writer.firstName + ' ' + writer.lastName }}{{ last ? '' : ', '}}
             </ng-container>
           </span>
         </li>
@@ -75,12 +75,15 @@
       </ul>
     </mat-tab>
     <mat-tab label="Обговорення">
-      <app-comments-list [book]="book.id"></app-comments-list>
+      <app-comments-list [book]="book.id" [userId]="(currentUser$ | async).id"></app-comments-list>
     </mat-tab>
-    <mat-tab label="Рецензії">
-      <button class="primary" mat-button (click)="openAddReviewModal()">
-        Додати рецензію
-      </button>
+    <mat-tab label="Рецензії" *ngIf="(currentUser$ | async) as user">
+      <div  class="add-review-btn">
+        <button class="primary" mat-button (click)="openAddReviewModal(user.id)">
+          Додати рецензію
+        </button>
+      </div>
+      <app-reviews-list [book]="book" [userId]="user.id"></app-reviews-list>
     </mat-tab>
   </mat-tab-group>
 
@@ -88,19 +91,96 @@
 
 <!--  <input type="file" accept="application/epub+zip" (change)="openFile($event)">-->
 </div>
-<div class="book-reader" [ngClass]="{'book-hidden' : !isBookOpened}">
-  <div class="book-title"></div>
-  <angular-epub-viewer #epubViewer
-                       [padding]="'16px'"
-                       [autoPagination]="true"
-                       [autoMetadata]="true"
-                       [autoTOC]="true"
-                       (onMetadataLoaded)="onMetadataLoaded($event)"
-                       (onPaginationComputed)="onPaginationComputed($event)"
-                       (onTOCLoaded)="onTOCLoaded($event)">
+<div [ngClass]="{'backdrop' : isBookOpened}" (click)="hideReader()"></div>
+<div class="book-reader {{ currentTheme }}" [ngClass]="{'book-hidden' : !isBookOpened}">
+  <div class="book-title">
+    <div class="book-toc-header">
+      Розділ {{ charter + 1 }}
+      <button class="book-button" [mdePopoverTriggerFor]="chaterPopover" mdePopoverTriggerOn="click">
+        <mat-icon>toc</mat-icon>
+      </button>
+    </div>
 
-  </angular-epub-viewer>
-  <div class="book-navigation"></div>
+    <mde-popover #chaterPopover="mdePopover"
+                 mdePopoverPositionY="above"
+                 mdePopoverPositionX="after"
+                 [mdePopoverOffsetY]="100"
+                 [mdePopoverOffsetX]="80">
+        <ul class="toc-list-inner">
+          <li *ngFor="let charter of chartersList" class="charter-inner">
+            <button (click)="goToCharter(charter.href)">{{ charter.label }}</button>
+          </li>
+        </ul>
+    </mde-popover>
+
+    <div class="book-settings">
+      <button class="book-button" [mdePopoverTriggerFor]="settingPopover" mdePopoverTriggerOn="click">
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      <mde-popover #settingPopover="mdePopover"
+                   mdePopoverPositionY="above"
+                   mdePopoverPositionX="after"
+                   [mdePopoverOffsetY]="100"
+                   [mdePopoverOffsetX]="10">
+        <div class="toc-list-inner">
+          <div class="font-size">
+            <div class="font-size-label">Розмір шрифту</div>
+            <div class="font-size-button-row">
+              <button *ngFor="let font of [10, 12, 14, 18]" class="font-size-button" (click)="selectFontSize(font)">
+                <mat-icon [ngStyle]="{'width.px': font, 'height.px': font, 'font-size': font+'px'}">font_download</mat-icon>
+                <span>{{ font }}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="font-size">
+            <div class="font-size-label">Тема</div>
+            <div class="font-size-button-row">
+              <button class="example-box light" (click)="selectTheme('light')">Text</button>
+              <button class="example-box dark" (click)="selectTheme('dark')">Text</button>
+              <button class="example-box gold" (click)="selectTheme('gold')">Text</button>
+            </div>
+          </div>
+        </div>
+      </mde-popover>
+
+    </div>
+  </div>
+  <div class="book-view">
+    <angular-epub-viewer #epubViewer
+                         [padding]="'16px'"
+                         [autoPagination]="true"
+                         [autoMetadata]="true"
+                         [autoTOC]="true"
+                         (onMetadataLoaded)="onMetadataLoaded($event)"
+                         (onPaginationComputed)="onPaginationComputed($event)"
+                         (onLocationFound)="onLocationFound($event)"
+                         (onTOCLoaded)="onTOCLoaded($event)">
+    </angular-epub-viewer>
+  </div>
+  <div class="book-navigation">
+    <div class="book-navigation__info book-navigation__info-on">
+      <div>{{ book.name }}</div>
+      <div>сторінка {{ currentPage }} із {{ pagesList.length }}</div>
+    </div>
+    <div class="book-navigation-pages" #navigation (click)="caclPosition($event)">
+      <div class="book-navigation-current-page" [ngStyle]="{'width.px': offsetWidth}"></div>
+    </div>
+    <div class="book-navigation__info book-navigation__info--under">
+      <ng-container *ngFor="let writer of book.writers; let last = last; let index = index">
+        {{ writer.firstName + ' ' + writer.lastName }}{{ last ? '' : ', '}}
+      </ng-container>
+    </div>
+    <div class="book-navigation__info book-navigation__info--under">
+      <button class="book-button" (click)="prevPage()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button class="book-button" (click)="nextPage()">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>
 
 <!--(onDocumentReady)="onDocumentReady()" (onChapterUnloaded)="onChapterUnloaded()"-->
