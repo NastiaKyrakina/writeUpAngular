@@ -63,6 +63,9 @@
           <span class="list-label">Аннотація:</span>
           <span class="list-value">{{ book.annotation }}</span>
         </li>
+        <li class="details-list-item">
+          <a class="download-link" [href]="book.fileLink" download>Завантажити книгу (epub)</a>
+        </li>
       </ul>
     </div>
   </div>

@@ -47,7 +47,6 @@ export class UploadFileComponent {
 
   upload(event: Event): void {
     const filesFromEvent = [].slice.call(event.target['files']);
-    console.log(event.target['files'])
     if (event.target['files'][0]) {
       this.uploadFiles(filesFromEvent);
       event.target['value'] = null;

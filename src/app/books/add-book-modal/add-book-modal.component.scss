@@ -83,3 +83,16 @@ mat-radio-button {
   align-items: center;
   justify-content: center;
 }
+
+.action-button {
+  display: inline;
+  cursor: pointer;
+  color: #F2994A;
+}
+
+.drop-down__input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}

@@ -30,6 +30,7 @@ import { UploadBookComponent } from './reviews/add-book-modal/upload-book/upload
 import { PopularBooksComponent } from './popular-books/popular-books.component';
 import { ReviewsListComponent } from './reviews/reviews-list/reviews-list.component';
 import { ReviewPageComponent } from './reviews/review-page/review-page.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [BooksListComponent, BookDetailsComponent, AddBookComponent, AddBookModalComponent, BooksSliderComponent, BookCardComponent, FilterBlockComponent, CommentsListComponent, CommentComponent, AddReviewComponent, UploadBookComponent, PopularBooksComponent, ReviewsListComponent, ReviewPageComponent],
@@ -51,6 +52,7 @@ import { ReviewPageComponent } from './reviews/review-page/review-page.component
     MatButtonModule,
     MatCardModule,
     MatRadioModule,
+    MatSnackBarModule,
   ],
   exports: [
     BooksSliderComponent

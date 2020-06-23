@@ -30,7 +30,7 @@ export class AddReviewComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       text: ['', Validators.required],
-      mark: ['', Validators.required],
+      mark: [5, Validators.required],
     })
   }
 

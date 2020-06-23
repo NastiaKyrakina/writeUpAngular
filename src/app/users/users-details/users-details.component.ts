@@ -3,7 +3,7 @@ import {IBook, IUser} from "../../../models/interfaces/books";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {switchMap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
-import {currentUser} from "../../core/servises/user.service";
+import {currentUser, UserService} from "../../core/servises/user.service";
 import {BooksService} from "../../core/servises/books.service";
 
 @Component({
@@ -16,15 +16,13 @@ export class UsersDetailsComponent implements OnInit {
   usersBooks$: Observable<Array<IBook>>;
   currentUser = false;
   constructor(
+    private userService: UserService,
     private route: ActivatedRoute,
     private booksService: BooksService,
   ) { }
 
   ngOnInit(): void {
-
-    console.log('details')
     this.route.data.subscribe((data) => {
-      console.log(data)
       if(data && data.currentUser) {
         this.user = currentUser;
         this.currentUser = true;
@@ -32,16 +30,8 @@ export class UsersDetailsComponent implements OnInit {
       }
     })
     this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          console.log(params)
-            return of(1);
-          }
-        )
-      )
-      .subscribe((book) => {
-        // this.user = book;
-        //  this.epubViewer.openLink('assets/moby-dick.epub');
+      .subscribe((params: ParamMap) => {
+        this.user = this.userService.getUser(+params.get('id'));
       })
   }
 

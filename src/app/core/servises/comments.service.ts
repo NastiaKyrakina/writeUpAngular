@@ -10,9 +10,10 @@ import {currentUser} from "./user.service";
   providedIn: 'root'
 })
 export class CommentsService {
-  readonly comments = comments;
+  comments = comments;
+  reviewsList = reviews;
   constructor() { }
-  reviews: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>(reviews);
+  reviews: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>(this.reviewsList);
 
   getBookComments(bookId: number): Observable<Array<IReview>> {
     const comments = this.comments.filter(comment => comment.bookId === bookId && comment.type === 'comment');
@@ -24,7 +25,7 @@ export class CommentsService {
   }
 
   getBookReviews(bookId: number): void {
-    const comments = reviews.filter(comment => comment.bookId === bookId);
+    const comments = this.reviewsList.filter(comment => comment.bookId === bookId);
     comments.forEach(comment => {
       const user = users.find(user => user.id === comment.userId);
       comment.user = user;
@@ -32,9 +33,15 @@ export class CommentsService {
     this.reviews.next(comments);
   }
 
+  deleteReview(bookId: number, reviewId: number): void {
+    this.reviewsList = this.reviewsList.filter(review => review.id !== reviewId);
+    console.log(this.reviewsList);
+    this.getBookReviews(bookId);
+  }
+
   addReview(value: {bookId: number; text: string; rate: number; userId: number}): void {
-    reviews.push({
-      id: reviews.length + 1,
+    this.reviewsList.push({
+      id: this.reviewsList.length + 1,
       bookId: value.bookId,
       userId: value.userId,
       text: value.text,

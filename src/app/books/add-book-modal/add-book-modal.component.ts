@@ -23,6 +23,7 @@ export class AddBookModalComponent implements OnInit {
   form: FormGroup;
   currentUser$: Observable<IUser>;
   users: IUser[] = [];
+  bookFile: File[];
 
   constructor(
     private userService: UserService,
@@ -84,6 +85,7 @@ export class AddBookModalComponent implements OnInit {
       this.bookService.addBook({
         writersIds: [userId, ...userIds],
         typesIds: typesIds,
+        fileLink: 'assets/fire/fire.epub',
         cover: this.imageLink ? '/assets/mock/c8.jpg' : '/assets/mock/default.png',
         ...values,
       }).subscribe(id => {
@@ -103,4 +105,10 @@ export class AddBookModalComponent implements OnInit {
   }
 
 
+  uploadBook($event: Event) {
+    const filesFromEvent = [].slice.call(event.target['files']);
+    if (event.target['files'][0]) {
+      this.bookFile = filesFromEvent[0];
+    }
+  }
 }

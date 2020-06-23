@@ -243,12 +243,17 @@
 .charter-inner {
   display: flex;
   align-items: center;
+  justify-content: left;
   padding: 5px 5px 5px 5px;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
   color: #F2F2F2;
+
+  button {
+    text-align: left;
+  }
 }
 
 .font-size-label {
@@ -312,4 +317,11 @@
   background-color: rgba(21, 21, 21, 0.16);
   top: 0;
   left: 0;
+}
+
+.download-link {
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 21px;
+  color: #F2994A;
 }

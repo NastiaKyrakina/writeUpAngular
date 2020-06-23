@@ -6,6 +6,8 @@ import {FormBuilder} from "@angular/forms";
 import {AddReviewComponent} from "../add-review/add-review.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ReviewPageComponent} from "../review-page/review-page.component";
+import {ConfirmMessaseComponent} from "../../../core/confirm-messase/confirm-messase.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-reviews-list',
@@ -28,6 +30,7 @@ export class ReviewsListComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +47,30 @@ export class ReviewsListComponent implements OnInit {
       data: {
         book: this.fullBook,
         review: review,
+      }
+    });
+  }
+
+  deleteReview(reviewId: number): void {
+    let dialogRef = this.dialog.open(ConfirmMessaseComponent, {
+      width: '330px',
+      data: {
+        header: 'Видалення рецензії',
+        text: 'Ви дійсно бажаєте видаліти цю рецензію?',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.commentsService.deleteReview(this.bookId, reviewId);
+        this.comments$ =  this.commentsService.reviews;
+        setTimeout(() => {
+          this.snackBar.open('Рецензію виделено успішнo', 'Закрити', {
+            duration: 1000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        }, 350);
       }
     });
   }

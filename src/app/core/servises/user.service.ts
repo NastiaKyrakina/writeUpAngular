@@ -34,4 +34,8 @@ export class UserService {
   logout(): void {
     this.user.next(null);
   }
+
+  getUser(id: number): IUser {
+    return users.find(user => user.id === id);
+  }
 }

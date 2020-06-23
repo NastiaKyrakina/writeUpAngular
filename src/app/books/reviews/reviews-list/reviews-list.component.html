@@ -2,7 +2,9 @@
 <div class="review-block" *ngFor="let comment of comments" >
   <div class="review-block-info">
     <div class="avatar-block">
-      <button class="delete-button" *ngIf="userId == comment.userId">
+      <button class="delete-button"
+              *ngIf="userId == comment.userId"
+              (click)="deleteReview(comment.id)">
         <mat-icon>delete_outline</mat-icon>
       </button>
       <app-user-pic-shared [picture]="comment.user.avatar" [lastName]="comment.user.lastName" [firstName]="comment.user.firstName"></app-user-pic-shared>

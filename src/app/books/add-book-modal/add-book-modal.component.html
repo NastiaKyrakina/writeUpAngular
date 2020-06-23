@@ -5,7 +5,7 @@
   </mat-form-field>
   <div class="book-add-details">
     <div class="book-add-details__cover">
-      <app-upload-file (uploadedFiles)="uploadFile($event)"></app-upload-file>
+      <app-upload-file (uploadedFiles)="uploadFile($event)" [imageLink]="imageLink"></app-upload-file>
     </div>
     <div class="book-add-details__data">
       <mat-form-field class="annotation" appearance="fill" >
@@ -42,6 +42,32 @@
     <button class="janres-button"
             [mdePopoverTriggerFor]="userPopover"
             mdePopoverTriggerOn="click">+</button>
+  </div>
+  <div class="janres book-upload">
+    <ng-container *ngIf="!bookFile; else bookLoaded">
+      <span class="janres-label">Завантижити книгу:
+       <label class="action-button" >
+        <input data-testid="file-input"
+               type="file"
+               accept=".application/epub+zip"
+               class="drop-down__input"
+               (change)="uploadBook($event)">
+        <mat-icon>cloud_upload</mat-icon>
+      </label>
+      </span>
+
+    </ng-container>
+    <ng-template #bookLoaded>
+      <span class="janres-label">Книга завантажена (
+        <label class="action-button" >
+        <input data-testid="file-input"
+               type="file"
+               class="drop-down__input"
+               accept=".application/epub+zip"
+               (change)="uploadBook($event)">
+        <mat-icon>cloud_upload</mat-icon>
+      </label>)</span>
+    </ng-template>
   </div>
   <div class="footer">
     <button class="secondary" mat-button (click)="closeModal()">

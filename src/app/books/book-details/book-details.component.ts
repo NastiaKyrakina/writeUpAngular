@@ -21,6 +21,7 @@ import {CommentsService} from "../../core/servises/comments.service";
 import {AddBookModalComponent} from "../add-book-modal/add-book-modal.component";
 import {ReviewPageComponent} from "../reviews/review-page/review-page.component";
 import {ConfirmMessaseComponent} from "../../core/confirm-messase/confirm-messase.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-book-details',
@@ -60,6 +61,7 @@ export class BookDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private render: Renderer2,
     private cdr: ChangeDetectorRef,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +75,7 @@ export class BookDetailsComponent implements OnInit {
       )
       .subscribe((book) => {
         this.book = book;
-        this.epubViewer.openLink('assets/misto/misto.epub');
+        this.epubViewer.openLink(this.book.fileLink);
       })
     ;
   }
@@ -208,7 +210,14 @@ export class BookDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.booksServise.deleteBook(this.book.id);
-        this.router.navigateByUrl('/books');
+        setTimeout(() => {
+          this.router.navigateByUrl('/books');
+          this.snackBar.open('Твір видалено успішнo', 'Закрити', {
+            duration: 1000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        }, 350);
       }
     });
   }
