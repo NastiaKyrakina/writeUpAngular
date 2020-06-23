@@ -1,1 +1,12 @@
-<p>confirm-messase works!</p>
+<div class="modal-content">
+  <h1>{{ header }}</h1>
+  <div class="review-text" [innerHtml]="text"></div>
+  <div class="footer">
+    <button class="secondary" mat-button (click)="closeModal(false)">
+      Ні
+    </button>
+    <button class="primary" mat-button (click)="closeModal(true)">
+      Так
+    </button>
+  </div>
+</div>

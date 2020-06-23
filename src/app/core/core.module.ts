@@ -16,11 +16,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
-import { ConfirmMessaseComponent } from './confirm-messase/confirm-messase.component';
 
 
 @NgModule({
-  declarations: [MainMenuComponent, TopMenuComponent, UserPicComponent, TextToColorDirective, InitialsPipe, AuthComponent, AuthFormComponent, CreateUserFormComponent, ConfirmMessaseComponent],
+  declarations: [MainMenuComponent, TopMenuComponent, UserPicComponent, TextToColorDirective, InitialsPipe, AuthComponent, AuthFormComponent, CreateUserFormComponent],
   imports: [
     CommonModule,
     AppRoutingModule,

@@ -10,7 +10,7 @@ export const Pages: Page[] = [
   },
   {
     name: "Читальна зала",
-    link: "reading",
+    link: "books/news",
   },
   {
     name: "Моя полиця",

@@ -34,14 +34,24 @@
             [mdePopoverTriggerFor]="appPopover"
             mdePopoverTriggerOn="click">+</button>
   </div>
+  <div class="janres">
+    <span class="janres-label">Співавтори:</span>
+    <span *ngFor="let user of users; let last = last; let index = index" class="genre-item">
+              {{ user.firstName + ' ' + user.lastName }}{{ last ? '' : ', '}}
+    </span>
+    <button class="janres-button"
+            [mdePopoverTriggerFor]="userPopover"
+            mdePopoverTriggerOn="click">+</button>
+  </div>
   <div class="footer">
     <button class="secondary" mat-button (click)="closeModal()">
       Скасувати
     </button>
-    <button class="primary"
+    <button *ngIf="(currentUser$ | async) as user"
+      class="primary"
             [disabled]="form.untouched || form.invalid || !genres.length"
-            mat-button (click)="addBook()">
-      Додати твір
+            mat-button (click)="addBook(user.id)">
+      {{ book ? 'Редагувати твір' : 'Додати твір'}}
     </button>
   </div>
 </form>
@@ -52,4 +62,12 @@
              [mdePopoverOffsetY]="100"
              [mdePopoverOffsetX]="50">
   <app-type-select (genreListChanged)="updateGenres($event)"></app-type-select>
+</mde-popover>
+
+<mde-popover #userPopover="mdePopover"
+             mdePopoverPositionY="above"
+             mdePopoverPositionX="after"
+             [mdePopoverOffsetY]="100"
+             [mdePopoverOffsetX]="50">
+  <app-user-select (userListChanged)="updateUsers($event)"></app-user-select >
 </mde-popover>

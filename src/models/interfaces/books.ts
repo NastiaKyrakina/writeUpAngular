@@ -42,6 +42,7 @@ export interface IUser {
   types?: IGenre[];
   typesIds?: number[];
   hasBooks?: boolean;
+  selected?: boolean;
 }
 
 export interface IReview {

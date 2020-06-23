@@ -1,0 +1,5 @@
+<h2 class="primary-title">Новинки</h2>
+<app-books-slider class="books-list" [books]="booksNew$ | async"></app-books-slider>
+
+<h2 class="primary-title">Популярне</h2>
+<app-books-slider [books]="booksPop$ | async"></app-books-slider>

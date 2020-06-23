@@ -1,4 +1,5 @@
-<div class="review-block" *ngFor="let comment of comments$ | async" >
+<ng-container *ngIf="(comments$ | async).length && (comments$ | async) as comments; else message">
+<div class="review-block" *ngFor="let comment of comments" >
   <div class="review-block-info">
     <div class="avatar-block">
       <button class="delete-button" *ngIf="userId == comment.userId">
@@ -18,4 +19,9 @@
       </div>
     </div>
   </div>
-</div>
+</div></ng-container>
+<ng-template #message>
+  <h2 class="message-title">
+    Рецензій не знайдено. Залиште першу!
+  </h2>
+</ng-template>

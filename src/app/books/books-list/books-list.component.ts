@@ -29,25 +29,13 @@ export class BooksListComponent implements OnInit {
   startYear: number = null;
   endYear: number = null;
 
-  @ViewChild('epubViewer', {static: true}) epubViewer: AngularEpubViewerComponent;
 
   constructor(
     private booksService: BooksService,
   ) { }
 
   ngOnInit() {
-    this.loadBooks('news');
-    // this.epubViewer.openLink('assets/georgia-cfi-20120521.epub');
-
-    this.epubViewer.setStyle('font-size', '20px');
-  }
-
-  openFile(event) {
-    this.fileSelected = true;
-    setTimeout(()=>{
-      this.epubViewer.openFile(event.target.files[0]);
-    }, 1000)
-    console.log(event.target.files[0])
+    this.searchBooks();
   }
 
   loadBooks(type: string): void {
@@ -79,56 +67,5 @@ export class BooksListComponent implements OnInit {
   searchBooksByQuery(query: string): void {
     this.query = query;
     this.searchBooks();
-  }
-
-  onDocumentReady() {
-    console.log('event:onDocumentReady');
-  }
-
-  onChapterUnloaded() {
-    console.log('event:onChapterUnloaded');
-  }
-
-  onChapterDisplayed(chapter: EpubChapter) {
-    console.log('event:onChapterDisplayed');
-  }
-
-  onLocationFound(location: EpubLocation) {
-    console.log('event:onLocationFound');
-  }
-
-  onPaginationComputed(pages: EpubPage[]) {
-    console.log('event:onPaginationComputed');
-  }
-
-  onTOCLoaded(chapters: EpubChapter[]) {
-    console.log('event:onTOCLoaded');
-  }
-
-  onSearchFinished(results: EpubSearchResult[]) {
-    console.log('event:onSearchFinished');
-  }
-
-  onPaddingChosen() {
-    // this.epubViewer.padding = this.chosenPadding;
-  }
-
-  onFontSizeChosen() {
-    if (this.epubViewer.documentReady) {
-      // this.epubViewer.setStyle('font-size', this.chosenFontSize);
-    }
-  }
-
-  onMetadataLoaded(metadata: EpubMetadata) {
-    console.log('event:onMetadataLoaded');
-    // this.metadata.nativeElement.innerHTML = JSON.stringify(metadata, null, 2)
-    //   .replace(/\n/g, '<br>')
-    //   .replace(/ /g, '&nbsp;');
-  }
-
-
-  onErrorOccurred(error: EpubError) {
-    console.log('event:onErrorOccurred');
-    console.log(error);
   }
 }

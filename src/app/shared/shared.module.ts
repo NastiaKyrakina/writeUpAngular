@@ -12,6 +12,9 @@ import { TypeSelectComponent } from './type-select/type-select.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormsModule} from "@angular/forms";
 import { UkrDatesPipe } from './pipe/ukr-dates.pipe';
+import {ConfirmMessaseComponent} from "../core/confirm-messase/confirm-messase.component";
+import {MatButtonModule} from "@angular/material/button";
+import { UserSelectComponent } from './user-select/user-select.component';
 
 
 
@@ -25,13 +28,16 @@ import { UkrDatesPipe } from './pipe/ukr-dates.pipe';
     InitialsPipe,
     TypeSelectComponent,
     UkrDatesPipe,
+    ConfirmMessaseComponent,
+    UserSelectComponent,
   ],
   imports: [
     CommonModule,
     MatIconModule,
     MatTooltipModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule
   ],
   exports: [
     UploadFileComponent,
@@ -39,6 +45,10 @@ import { UkrDatesPipe } from './pipe/ukr-dates.pipe';
     FilterButtonComponent,
     UserPicComponent,
     TypeSelectComponent,
+    UserSelectComponent,
+  ],
+  entryComponents: [
+    ConfirmMessaseComponent,
   ]
 })
 export class SharedModule { }

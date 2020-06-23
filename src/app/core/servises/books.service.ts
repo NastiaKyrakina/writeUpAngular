@@ -4,17 +4,44 @@ import { books, reviews} from "./consts";
 import {IBook} from "../../../models/interfaces/books";
 import {users} from "./user-consts";
 import {GENRES} from "../../shared/type-select/consts";
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BooksService {
-
+  books = books;
   constructor() {
   }
 
+  deleteBook(bookId: number): void {
+    this.books = this.books.filter(book => book.id !== bookId)
+  }
+
+  addBook(book: IBook): Observable<number> {
+    const id: number =  this.books.length + 1;
+    this.books .push({
+        id,
+        ...book,
+      });
+      return of(id)
+  }
+
+  updateBook(book1: IBook): Observable<number> {
+    const bookForUpdate = this.books.find(book => book.id == book1.id);
+    console.log(bookForUpdate);
+    if (bookForUpdate) {
+      bookForUpdate.name = book1.name;
+      bookForUpdate.annotation = book1.annotation;
+      bookForUpdate.ageLimitation = book1.ageLimitation;
+      bookForUpdate.type = book1.type;
+      bookForUpdate.typesIds = book1.typesIds;
+    }
+    return of (book1.id);
+  }
+
   getBook(id: number): Observable<IBook> {
-    const book = books.find(book => book.id === id);
+    const book = this.books.find(book => book.id === id);
     const writers = users.filter(user => book.writersIds.includes(user.id));
     const types = GENRES.filter(types => book.typesIds.includes(types.id));
     let bookReviews = reviews.filter(review => review.bookId == id);
@@ -33,7 +60,7 @@ export class BooksService {
   }
 
   getBooks(type: string = 'new'): Observable<Array<IBook>> {
-    books.forEach(book => {
+    this.books.forEach(book => {
       const writers = users.filter(user => book.writersIds.includes(user.id));
       const types = GENRES.filter(types => book.typesIds.includes(types.id));
       let bookReviews = reviews.filter(review => review.bookId == book.id);
@@ -50,7 +77,7 @@ export class BooksService {
       book.stars = book.starsCount ? mark / book.starsCount : 0;
     });
 
-    return of(books);
+    return of(this.books);
   }
 
   searchBooks(params: {
@@ -61,9 +88,9 @@ export class BooksService {
               }
   ): Observable<Array<IBook>> {
     const resultSearch = [];
-    for (let i = 0; i < books.length; i++) {
+    for (let i = 0; i < this.books.length; i++) {
 
-      const book = books[i];
+      const book = this.books[i];
       const writers = users.filter(user => book.writersIds.includes(user.id));
 
       if (params.query) {
@@ -81,7 +108,7 @@ export class BooksService {
           continue;
         }
       }
-      console.log(params)
+
       if (params.start && params.end) {
         const pubDateYear = new Date(book.pubDate).getFullYear();
         if (!(pubDateYear >= params.start && pubDateYear <= params.end)) {
@@ -106,5 +133,30 @@ export class BooksService {
       resultSearch.push(book);
     }
     return of(resultSearch);
+  }
+
+  getPopularBooks(): Observable<Array<IBook>> {
+    return this.getBooks()
+      .pipe(
+        map((books) => {
+          books.sort((book1,book2) => {
+            return book2.stars - book1.stars;
+          });
+          console.log(books);
+          return books.slice(0, 5);
+        })
+      );
+  }
+
+  getNewBooks(): Observable<Array<IBook>> {
+    return this.getBooks()
+      .pipe(
+        map((books) => {
+          books.sort((book1,book2) => {
+            return new Date(book1.pubDate).getMilliseconds() -  new Date(book2.stars).getMilliseconds();
+          });
+          return books.slice(0, 5);
+        })
+      );
   }
 }

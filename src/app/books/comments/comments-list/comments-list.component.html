@@ -8,4 +8,11 @@
     <textarea formControlName="text" matInput placeholder="Приєднатися до обговорення..."></textarea>
   </mat-form-field>
 </form>
-<app-comment *ngFor="let comment of comments$ | async" [comment]="comment"></app-comment>
+<ng-container *ngIf="(comments$ | async).length && (comments$ | async) as comments; else message">
+  <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+</ng-container>
+<ng-template #message>
+  <h2 class="message-title">
+    Коментарів не знайдено. Залиште перший!
+  </h2>
+</ng-template>

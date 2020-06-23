@@ -1,5 +1,13 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {BooksService} from "../../core/servises/books.service";
 import {Observable} from "rxjs";
 import {IBook, IUser} from "../../../models/interfaces/books";
@@ -10,6 +18,9 @@ import {AddReviewComponent} from "../reviews/add-review/add-review.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../core/servises/user.service";
 import {CommentsService} from "../../core/servises/comments.service";
+import {AddBookModalComponent} from "../add-book-modal/add-book-modal.component";
+import {ReviewPageComponent} from "../reviews/review-page/review-page.component";
+import {ConfirmMessaseComponent} from "../../core/confirm-messase/confirm-messase.component";
 
 @Component({
   selector: 'app-book-details',
@@ -32,6 +43,7 @@ export class BookDetailsComponent implements OnInit {
   currentPage = 1;
   charter = 0;
   currentTheme = 'light';
+  canEdit: boolean = false;
 
   fontColors = {
     light: '#000000',
@@ -41,11 +53,13 @@ export class BookDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private booksServise: BooksService,
     private usersService: UserService,
     private commentService: CommentsService,
     private dialog: MatDialog,
     private render: Renderer2,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -59,11 +73,32 @@ export class BookDetailsComponent implements OnInit {
       )
       .subscribe((book) => {
         this.book = book;
-       this.epubViewer.openLink('assets/misto/misto.epub');
+        this.epubViewer.openLink('assets/misto/misto.epub');
       })
     ;
   }
 
+  openBookForEdit(): void {
+    let dialogRef = this.dialog.open(AddBookModalComponent, {
+      disableClose: true,
+      height: '680px',
+      width: '800px',
+      data: {
+        book: this.book,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(()=> {
+        this.booksServise.getBook(this.book.id)
+          .subscribe((book) => {
+            this.book = {...book};
+            console.log(this.book)
+            this.cdr.detectChanges();
+          });
+    }, 100);
+    });
+  }
   onMetadataLoaded(metadata: EpubMetadata) {
     console.log('event:onMetadataLoaded', metadata);
     // this.metadata.nativeElement.innerHTML = JSON.stringify(metadata, null, 2)
@@ -159,5 +194,22 @@ export class BookDetailsComponent implements OnInit {
 
   hideReader() {
     this.isBookOpened = false;
+  }
+
+  deleteBook() {
+    let dialogRef = this.dialog.open(ConfirmMessaseComponent, {
+      width: '330px',
+      data: {
+        header: 'Видалення книги',
+        text: 'Ви дійсно бажаєте видаліти цю книгу?',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.booksServise.deleteBook(this.book.id);
+        this.router.navigateByUrl('/books');
+      }
+    });
   }
 }

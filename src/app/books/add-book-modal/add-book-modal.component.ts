@@ -4,8 +4,10 @@ import {UserService} from "../../core/servises/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../reviews/add-review/add-review.component";
-import {IBook, ITypes, IWriter} from "../../../models/interfaces/books";
+import {IBook, ITypes, IUser, IWriter} from "../../../models/interfaces/books";
 import {Route, Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {BooksService} from "../../core/servises/books.service";
 
 @Component({
   selector: 'app-add-book-modal',
@@ -19,10 +21,14 @@ export class AddBookModalComponent implements OnInit {
   book: IBook;
   imageLink: any;
   form: FormGroup;
+  currentUser$: Observable<IUser>;
+  users: IUser[] = [];
 
   constructor(
     private userService: UserService,
+    private bookService: BooksService,
     private fb: FormBuilder,
+    private usersService: UserService,
     private matDialogRef: MatDialogRef<AddBookModalComponent>,
     private route: Router,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -31,6 +37,7 @@ export class AddBookModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUser$ = this.usersService.user;
     if (this.book) {
       this.form = this.fb.group({
         name: [this.book.name ? this.book.name : '', Validators.required],
@@ -58,12 +65,40 @@ export class AddBookModalComponent implements OnInit {
     this.genres = genres;
   }
 
+  updateUsers(users: IUser[]) {
+    this.users = users;
+  }
+
   closeModal() {
     this.matDialogRef.close();
     this.route.navigateByUrl('/books');
   }
 
-  addBook() {}
+  addBook(userId: number) {
+    const typesIds = this.genres.map(genre => genre.id);
+    const values = this.form.value;
+    if (!this.book) {
+
+      this.bookService.addBook({
+        writersIds: [userId, ],
+        typesIds: typesIds,
+        cover: this.imageLink ? '/assets/mock/c8.jpg' : '/assets/mock/default.png',
+        ...values,
+      }).subscribe(id => {
+        this.matDialogRef.close();
+        this.route.navigateByUrl(`/books/books/${id}` );
+      })
+    } else {
+      this.bookService.updateBook({
+        ...this.book,
+        typesIds: typesIds,
+        ...values,
+      }).subscribe(id => {
+        this.matDialogRef.close();
+        this.route.navigateByUrl(`/books/books/${id}` );
+      })
+    }
+  }
 
 
 }
