@@ -76,11 +76,13 @@ export class AddBookModalComponent implements OnInit {
 
   addBook(userId: number) {
     const typesIds = this.genres.map(genre => genre.id);
+    const userIds = this.users.map(user => user.id);
+
     const values = this.form.value;
     if (!this.book) {
 
       this.bookService.addBook({
-        writersIds: [userId, ],
+        writersIds: [userId, ...userIds],
         typesIds: typesIds,
         cover: this.imageLink ? '/assets/mock/c8.jpg' : '/assets/mock/default.png',
         ...values,
