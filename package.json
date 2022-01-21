@@ -23,7 +23,7 @@
     "@angular/router": "~9.1.7",
     "@material-extended/mde": "^3.0.0",
     "angular-epub-viewer": "^0.1.4",
-    "epubjs": "^0.2.21",
+    "epubjs": "^0.3.89",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.5.5",
     "rxjs-compat": "^6.5.5",
